@@ -1,4 +1,10 @@
-<input> 5678 0
+; <input> 50 30
+; <input> 25 25
+; <input> 5 30
+; <input> 100001 2
+; <input> 0 123456
+; <input> 123456 0
+; <input> 0 0 ;  // my test
 read 1 ; first value
 read 2 ; second value
 
@@ -11,7 +17,7 @@ store 4 ; mod value
 load 2 
 jz end_err
 
-; if r1 = 1 -> 0 0 
+; if r1 = 0 -> 0 0 
 load 1
 jz end
 
