@@ -39,7 +39,6 @@ public class GcdAlgorithm {
         return gcdRecursive(b, a % b);
     }
 
-    //todo relearn binary operations
     public static int gcdBinary(int a, int b) {
         if (a == b)
             return a;

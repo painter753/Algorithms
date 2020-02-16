@@ -32,7 +32,6 @@ public class PowAlgorithm {
         return res;
     }
 
-    //todo relearn
     public static double powBinary(double d, int exp) {
         double res = 1;
 
@@ -43,8 +42,6 @@ public class PowAlgorithm {
             exp /= 2;
         }
         if ( exp > 0) res *= d;
-
-
 
         return res;
     }

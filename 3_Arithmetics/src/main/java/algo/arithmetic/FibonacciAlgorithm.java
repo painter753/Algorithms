@@ -6,26 +6,39 @@ public class FibonacciAlgorithm {
         System.out.println(findFibonacciRecursion(13));
         System.out.println(findFibonacciIterative(13));
         System.out.println(findFibonacciUsingGoldenCircle(13));
+        System.out.println(findFibonacciUsingMatrixMultiplication(13));
 
-        System.out.println(new Matrix().multiply(new Matrix()));
     }
 
-    //todo
     public static int findFibonacciUsingMatrixMultiplication(int position) {
         if (position < 3)
             return 1;
         
+        Matrix res = new SingleMatrix();
         Matrix m = new Matrix();
-        for (int i = 0; i < 7; i++) {
-            
+        int exp = position - 1;
+        while ( exp > 1) {
+            if ( exp % 2 == 1)
+               res = res.multiply(m);
+            m = m.multiply(m);
+            exp /= 2;
         }
+        if ( exp > 0) res = res.multiply(m);
         
         
-        return 0;
+        return res.getElement(0,0);
+    }
+
+    private static class SingleMatrix extends Matrix {
+        public SingleMatrix() {
+            array[0][0] = 1;
+            array[1][0] = array[0][1] = 0;
+            array[1][1] = 1;
+        }
     }
 
     private static class Matrix {
-        private int[][] array = new int[2][2];
+        protected int[][] array = new int[2][2];
 
         public Matrix(){
             array[0][0] = 1;
