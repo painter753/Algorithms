@@ -38,6 +38,7 @@ public class LinkedArray<T> implements IArray<T> {
         this.size = 0;
     }
 
+    //todo check 'checkindex'
     @Override
     public void add(T item, int index) {
         if (index < 0 || index > size)

@@ -17,12 +17,4 @@ public interface IArray<T> {
         System.arraycopy(array, 0, newArray, 0, size());
         return newArray;
     }
-
-    default void print(T[] array) {
-        for (T t : array) {
-            System.out.printf(t + " ");
-        }
-    }
-
-
 }

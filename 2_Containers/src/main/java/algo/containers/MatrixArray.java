@@ -1,12 +1,11 @@
 package algo.containers;
 
-public class MatrixArray<T> implements IArray<T> {
+public class MatrixArray<T> extends AbstractArray<T> {
 
     private int size;
     private int vector;
 
-    //private IArray<IArray<T>> array;
-    private SingleArray<VectorArray<T>> array;
+    private IArray<IArray<T>> array;
 
     public MatrixArray(int vector) {
         this.vector = vector;
@@ -35,6 +34,8 @@ public class MatrixArray<T> implements IArray<T> {
 
     @Override
     public T get(int index) {
+        checkIndex(index);
+
         return array
                 .get(index / vector)
                 .get(index % vector);
@@ -49,9 +50,7 @@ public class MatrixArray<T> implements IArray<T> {
 
     @Override
     public void add(T item, int index) {
-        if (index < 0 || index > array.size() * vector) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        checkIndex(index);
 
         if (size() == vector * array.size()) {
             array.add(new VectorArray<>(vector));
@@ -70,7 +69,7 @@ public class MatrixArray<T> implements IArray<T> {
             T tmpItem = null;
             for (int i = insertionIndexArray; i < array.size(); i++) {
 
-                VectorArray<T> tmpArray = array.get(i);
+                IArray<T> tmpArray = array.get(i);
                 if (tmpArray.size() < vector && inserted) {
                     tmpArray.add(tmpItem, 0);
                 } else if (inserted) {
@@ -94,28 +93,24 @@ public class MatrixArray<T> implements IArray<T> {
             throw new ArrayIndexOutOfBoundsException();
         }
 
-        if (size() == 701) {
-            int b = 0;
-        }
-
         // choose array for remove
         int removingIndexArray = index / vector;
         T removedItem = null;
         T tmpItem = null;
         boolean initialize = true;
         if (removingIndexArray == array.size() - 1) {
-            VectorArray<T> tmpArr = array.get(removingIndexArray);
+            IArray<T> tmpArr = array.get(removingIndexArray);
             tmpItem = array.get(removingIndexArray).remove(index % vector);
             removedItem = tmpItem;
         } else {
             for (int i = array.size() - 1 ; i > removingIndexArray; i--) {
                 if (!initialize ) {
-                    VectorArray<T> tmpArr = array.get(i);
+                    IArray<T> tmpArr = array.get(i);
                     T first = tmpArr.remove(0);
                     tmpArr.add(tmpItem);
                     tmpItem = first;
                 } else {
-                    VectorArray<T> tmpArr = array.get(i);
+                    IArray<T> tmpArr = array.get(i);
                     tmpItem = tmpArr.remove(0);
                     initialize = false;
                 }
@@ -128,14 +123,12 @@ public class MatrixArray<T> implements IArray<T> {
         size--;
 
         return removedItem;
-
-
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        if (array.size() == 0) return "no";
+        if (array.size() == 0) return "no elements";
         for (int i = 0; i < array.size(); i++) {
             builder.append(array.get(i).toString()).append(" ");
         }
