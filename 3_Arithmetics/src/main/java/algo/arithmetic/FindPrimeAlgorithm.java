@@ -2,18 +2,15 @@ package algo.arithmetic;
 
 import algo.containers.FactorArray;
 import algo.containers.VectorArray;
-
-import java.util.stream.IntStream;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class FindPrimeAlgorithm {
-
-    public static void main(String[] args) {
-
-    }
 
     //O(n)
     //todo
     public static void EratosthenesSieveAdvanced(int bound) {
+        if (true) throw new NotImplementedException();
+
         int[] base = new int[bound + 1];
         FactorArray<Integer> array = new FactorArray<>();
 
@@ -34,7 +31,6 @@ public class FindPrimeAlgorithm {
 
         for (int i = 2; i * i < bound + 1; i++) {
             if (!checked[i]) {
-                //array.add(i);
                 for(int j = i * i ; j < bound + 1; j += i) {
                     checked[j] = true;
                 }
@@ -52,7 +48,6 @@ public class FindPrimeAlgorithm {
         for (int i = 2; i <= bound; i++)
             if (isPrimeSimple(i))
                 counter++;
-        System.out.println(counter);
     }
 
     public static boolean isPrimeSimple3(int value){
