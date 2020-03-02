@@ -2,9 +2,9 @@ package algo.trees;
 
 public class Node<T extends Comparable<T>> {
 
-    private Node<T> left;
-    private Node<T> right;
-    private Node<T> parent;
+    protected Node<T> left;
+    protected Node<T> right;
+    protected Node<T> parent;
 
     private T item;
 

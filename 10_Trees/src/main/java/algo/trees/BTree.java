@@ -16,24 +16,23 @@ public class BTree<T extends Comparable<T>> implements Tree<T>  {
 
     @Override
     public void insert(T item) {
-        if (size == 0) {
-            Node<T> node = new Node<>(item);
-            root = node;
-        } else {
-            insertItem(item);
-        }
+        Node<T> node = new Node<>(item);
+        insertNode(node);
         size++;
     }
 
-    private void insertItem(T item) {
-        Node<T> node = new Node<>(item);
+    private void insertNode(Node<T> node) {
+        if (size == 0) {
+            root = node;
+            return;
+        }
 
         Node<T> prev = root;
         Node<T> cursor = root;
 
         while (cursor != null) {
             prev = cursor;
-            int comparator = item.compareTo(cursor.getItem());
+            int comparator = node.getItem().compareTo(cursor.getItem());
 
             if (comparator > 0) {
                 cursor = prev.getRight();
@@ -145,6 +144,7 @@ public class BTree<T extends Comparable<T>> implements Tree<T>  {
                 replacement.linkParent(removed.getParent());
             }
         }
+        size--;
     }
 
     private void replaceByMaxFromLeftBranch(Node<T> removed, Node<T> replacement) {
