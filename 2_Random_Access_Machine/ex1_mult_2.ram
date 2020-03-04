@@ -1,0 +1,63 @@
+; <input> 5 3
+; <input> 1111 111
+; <input> 1 1000000
+; <input> 1000000 1
+; <input> 123 0
+<input> 0 123
+
+read 1 ; first value
+read 2 ; second value
+load =0
+store 3 ; mult value
+;check if zero
+load 1 
+jz end
+load 2
+jz end
+
+;check if multiplier == 1
+load 1
+sub =1
+jz if_one_first
+load 2
+sub =1
+jz if_one_second
+jmp process
+if_one_first:
+load 1
+store 3
+jmp end
+if_one_second:
+load 2 
+store 3
+jmp end
+
+process:
+;find min (used as multiplicator)
+load 2 
+sub 1
+jgtz r2big
+;r1 >= r2 no need to swap values
+jmp mult
+;r2 > r1 need to swap values
+r2big:
+  load 1 
+  store 4
+  load 2 
+  store 1
+  load 4 
+  store 2
+;multiplication using addition
+mult:
+	load 3
+	add 1
+	store 3
+	;increment--
+	load 2
+	sub =1
+	store 2
+jgtz mult
+
+end:
+write 3
+halt
