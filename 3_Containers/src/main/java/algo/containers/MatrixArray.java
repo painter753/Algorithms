@@ -1,6 +1,6 @@
 package algo.containers;
 
-public class MatrixArray<T> extends AbstractArray<T> {
+public class MatrixArray<T> implements IArray<T> {
 
     private int size;
     private int vector;
@@ -133,5 +133,11 @@ public class MatrixArray<T> extends AbstractArray<T> {
             builder.append(array.get(i).toString()).append(" ");
         }
         return builder.toString();
+    }
+
+    protected void checkIndex(int index) {
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("Invalid index:" + index);
+        }
     }
 }

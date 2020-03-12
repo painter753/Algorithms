@@ -1,7 +1,24 @@
 package algo.containers;
 
-//todo check
 public class DoubleLinkedList<T> implements IArray<T> {
+
+    public static void main(String[] args) {
+        DoubleLinkedList<Integer> list = new DoubleLinkedList<>();
+        list.add(1);
+        list.add(4);
+        list.add(12);
+        list.add(11);
+        list.add(7);
+        list.add(3);
+        list.add(14);
+
+        System.out.println(list);
+
+
+        System.out.println(list.get(0));
+        System.out.println(list.get(3));
+        System.out.println(list.get(list.size - 1));
+    }
 
     private int size;
     private Node<T> head;
@@ -25,6 +42,7 @@ public class DoubleLinkedList<T> implements IArray<T> {
         this.size++;
     }
 
+    //todo check
     @Override
     public T get(int index) {
         T value = null;
@@ -131,11 +149,12 @@ public class DoubleLinkedList<T> implements IArray<T> {
         while ((node = node.getNext()) != null) {
             builder.append(node.getItem()).append(",");
         }
+        builder.deleteCharAt(builder.length() - 1);
         builder.append("]");
         return builder.toString();
     }
 
-    private static class Node<T> {
+    protected static class Node<T> {
 
         private T item;
         private Node<T> prev;
