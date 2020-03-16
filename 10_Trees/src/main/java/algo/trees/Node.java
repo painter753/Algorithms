@@ -1,50 +1,40 @@
 package algo.trees;
 
-public class Node<T extends Comparable<T>> {
+public interface Node<T extends Comparable<T>> {
 
-    protected Node<T> left;
-    protected Node<T> right;
-    protected Node<T> parent;
+    T getItem();
 
-    private T item;
+    Node<T> getParent();
+    Node<T> getLeft();
+    Node<T> getRight();
 
-    public Node(T item) {
-        this.item = item;
-    }
+    void setParent(Node<T> node);
+    void setLeft(Node<T> node);
+    void setRight(Node<T> node);
 
-    private void setLeft(Node<T> left) {
-        this.left = left;
-    }
-    private void setRight(Node<T> right) {
-        this.right = right;
-    }
-    private void setParent(Node<T> parent) {
-        this.parent = parent;
-    }
+    default void linkChild(Node<T> node) {
+        if (node == null) return;
 
-    public Node<T> getLeft() {
-        return left;
+        int comparator = node.getItem().compareTo(this.getItem());
+        if ( comparator > 0 ) {
+            this.linkRight(node);
+        } else {
+            this.linkLeft(node);
+        }
     }
-    public Node<T> getRight() {
-        return right;
-    }
-    public Node<T> getParent() {
-        return parent;
-    }
-
-    public void linkLeft(Node<T> node) {
+    default void linkLeft(Node<T> node) {
         this.setLeft(node);
         if (node != null) {
             node.setParent(this);
         }
     }
-    public void linkRight(Node<T> node) {
+    default void linkRight(Node<T> node) {
         this.setRight(node);
         if (node != null) {
             node.setParent(this);
         }
     }
-    public void linkParent(Node<T> node) {
+    default void linkParent(Node<T> node) {
         if (node != null) {
             if (this.getItem().compareTo(node.getItem()) > 0) {
                 node.linkRight(this);
@@ -54,21 +44,25 @@ public class Node<T extends Comparable<T>> {
         }
     }
 
-    public void unlinkLeft() {
+    default Node<T> unlinkLeft() {
         Node<T> node = getLeft();
         setLeft(null);
         if (node != null) {
             node.setParent(null);
         }
+
+        return node;
     }
-    public void unlinkRight() {
+    default Node<T> unlinkRight() {
         Node<T> node = getRight();
         setRight(null);
         if (node != null) {
             node.setParent(null);
         }
+
+        return node;
     }
-    public void unlinkParent() {
+    default Node<T> unlinkParent() {
         Node<T> node = getParent();
         if (node != null) {
             if (this.getItem().compareTo(node.getItem()) > 0) {
@@ -77,10 +71,8 @@ public class Node<T extends Comparable<T>> {
                 node.unlinkLeft();
             }
         }
+
+        return node;
     }
 
-
-    public T getItem() {
-        return item;
-    }
 }

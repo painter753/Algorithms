@@ -1,48 +1,42 @@
 package algo.trees;
 
-public class BTree<T extends Comparable<T>> implements Tree<T>  {
+public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
 
-    private Node<T> root;
-    private int size;
+    protected Node<T> root;
+    protected int size;
 
-    public BTree() {
+    public AbstractTree(){
         this.size = 0;
-    }
-
-    public BTree(T item) {
-        this.root = new Node<>(item);
-        this.size++;
     }
 
     @Override
     public void insert(T item) {
-        Node<T> node = new Node<>(item);
+        Node<T> node = newNode(item);
         insertNode(node);
-        size++;
     }
 
-    private void insertNode(Node<T> node) {
+    protected void insertNode(Node<T> node) {
         if (size == 0) {
             root = node;
-            return;
-        }
+        } else {
 
-        Node<T> prev = root;
-        Node<T> cursor = root;
+            Node<T> prev = root;
+            Node<T> cursor = root;
 
-        while (cursor != null) {
-            prev = cursor;
-            int comparator = node.getItem().compareTo(cursor.getItem());
+            while (cursor != null) {
+                prev = cursor;
+                int comparator = node.getItem().compareTo(cursor.getItem());
 
-            if (comparator > 0) {
-                cursor = prev.getRight();
-            } else {
-                cursor = prev.getLeft();
+                if (comparator > 0) {
+                    cursor = prev.getRight();
+                } else {
+                    cursor = prev.getLeft();
+                }
             }
+
+            node.linkParent(prev);
         }
-
-        node.linkParent(prev);
-
+        size++;
     }
 
     @Override
@@ -79,32 +73,6 @@ public class BTree<T extends Comparable<T>> implements Tree<T>  {
         return founded;
     }
 
-    private boolean searchItemRec(T item, Node<T> node) {
-        if (node == null)
-            return false;
-
-        int comparison = item.compareTo(node.getItem());
-        if (comparison == 0)
-            return  true;
-
-        if (comparison > 0)
-            return searchItemRec(item, node.getRight());
-        else
-            return searchItemRec(item, node.getLeft());
-    }
-    private void insertItemRec(T item, Node<T> node) {
-        if (node.getItem().compareTo(item) < 0)
-            if (node.getLeft() != null)
-                insertItemRec(item, node.getLeft());
-            else
-                node.getLeft();//setLeft(new Node<>(item));
-        else
-        if (node.getRight() != null)
-            insertItemRec(item, node.getRight());
-        else
-            node.getRight();//setRight(new Node<>(item));
-    }
-
     @Override
     public void remove(T item) {
         Node<T> removed = searchItem(item);
@@ -117,7 +85,7 @@ public class BTree<T extends Comparable<T>> implements Tree<T>  {
             // removed == root
             replacement = findMaxNode(removed.getLeft());
             if (replacement == null) {
-                //there's not left branch
+                //there's no left branch
                 replacement = removed.getRight();
                 removed.unlinkRight();
             } else {
@@ -166,7 +134,7 @@ public class BTree<T extends Comparable<T>> implements Tree<T>  {
 
     @Override
     public void sort() {
-        if (size == 0) System.out.println("no elements");
+        if (size == 0) return;
 
         sort(root);
     }
@@ -177,25 +145,7 @@ public class BTree<T extends Comparable<T>> implements Tree<T>  {
         System.out.println(node.getItem());
         if (node.getRight() != null)
             sort(node.getRight());
-
     }
 
-    public static void main(String[] args) {
-        BTree<Integer> tree = new BTree<>();
-
-        tree.insert(3);
-        tree.insert(4);
-        tree.insert(6);
-        tree.insert(9);
-        tree.insert(10);
-        tree.insert(12);
-
-        tree.sort();
-
-        tree.remove(12);
-
-        System.out.println();
-        tree.sort();
-
-    }
+    public abstract Node<T> newNode(T item);
 }
