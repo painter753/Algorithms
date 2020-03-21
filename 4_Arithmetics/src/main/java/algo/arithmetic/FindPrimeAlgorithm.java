@@ -25,22 +25,32 @@ public class FindPrimeAlgorithm {
 
     }
 
+
+    public static void main(String[] args) {
+           EratosthenesSieveSimple(100);
+    }
+
     public static void EratosthenesSieveSimple(int bound) {
         VectorArray<Integer> array = new VectorArray<>();
         boolean[] checked = new boolean[bound + 1];
 
-        for (int i = 2; i * i < bound + 1; i++) {
-            if (!checked[i]) {
-                for(int j = i * i ; j < bound + 1; j += i) {
+        int cursor = 2;
+
+        for (cursor = 2; cursor * cursor < bound + 1; cursor++) {
+            if (!checked[cursor]) {
+                array.add(cursor);
+                for(int j = cursor * cursor ; j < bound + 1; j += cursor) {
                     checked[j] = true;
                 }
             }
         }
 
-        for (int i = 2; i < bound; i++) {
+        for (int i = cursor; i < bound; i++) {
             if (!checked[i])
                 array.add(i);
         }
+
+        System.out.println(array);
     }
 
     public static void simplePrimeCounter(int bound) {
