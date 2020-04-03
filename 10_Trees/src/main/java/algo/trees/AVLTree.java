@@ -36,31 +36,52 @@ public class AVLTree<T extends Comparable<T>> extends AbstractTree<T> {
         updateNode(currentNode.getParent());
     }
 
+    @Override
+    protected Node<T> removeNode(Node<T> removed) {
+        AVLNode<T> replacer = (AVLNode<T>) super.removeNode(removed);
+
+        updateNode(replacer);
+
+        return replacer;
+    }
+
     private void updateNode(AVLNode<T> node) {
         if (node == null) return;
         AVLNode<T> parent = node.getParent();
         node.updateHeight();
 
         if (node.getBalance() >= 2)
-            rightRotation(node);
-        else if (node.getBalance() <= -2)
             leftRotation(node);
+        else if (node.getBalance() <= -2)
+            rightRotation(node);
 
         updateNode(parent);
     }
 
     public void rightRotation(AVLNode<T> node) {
-        if (TreeUtil.getHeight(node.getLeft().getLeft()) >= TreeUtil.getHeight(node.getLeft().getRight()))
-           smallRightRotation(node);
-        else
-            bigRightRotation(node);
+//        if (TreeUtil.getHeight(node.getLeft().getLeft()) >= TreeUtil.getHeight(node.getLeft().getRight()))
+//           smallRightRotation(node);
+//        else
+//            bigRightRotation(node);
+
+        AVLNode<T>  left = node.getLeft();
+        if (left.getBalance() > 0) {
+            smallLeftRotation(left);
+        }
+        smallRightRotation(node);
     }
 
     public void leftRotation(AVLNode<T> node) {
-        if (TreeUtil.getHeight(node.getRight().getLeft()) <= TreeUtil.getHeight(node.getRight().getRight()))
-           smallLeftRotation(node);
-        else
-            bigLeftRotation(node);
+//        if (TreeUtil.getHeight(node.getRight().getLeft()) <= TreeUtil.getHeight(node.getRight().getRight()))
+//           smallLeftRotation(node);
+//        else
+//            bigLeftRotation(node);
+
+        AVLNode<T> right = node.getRight();
+        if (right.getBalance() < 0) {
+            smallRightRotation(right);
+        }
+        smallLeftRotation(node);
     }
 
     public void smallRightRotation(AVLNode<T> a) {
@@ -121,7 +142,7 @@ public class AVLTree<T extends Comparable<T>> extends AbstractTree<T> {
         if (parent == null) {
             this.root = c;
         } else {
-            parent.linkChild(c);
+            c.linkParent(parent);
         }
 
     }
@@ -146,7 +167,7 @@ public class AVLTree<T extends Comparable<T>> extends AbstractTree<T> {
         if (parent == null) {
             this.root = c;
         } else {
-            parent.linkChild(c);
+            c.linkParent(parent);
         }
     }
 

@@ -27,7 +27,7 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
                 prev = cursor;
                 int comparator = node.getItem().compareTo(cursor.getItem());
 
-                if (comparator > 0) {
+                if (comparator >= 0) {
                     cursor = prev.getRight();
                 } else {
                     cursor = prev.getLeft();
@@ -43,9 +43,6 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
     public boolean search(T item) {
         if (size == 0)
             return false;
-
-        if (size == 1)
-            return item.compareTo(root.getItem()) == 0;
 
         return searchItem(item) != null;
     }
@@ -76,49 +73,44 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
     @Override
     public void remove(T item) {
         Node<T> removed = searchItem(item);
-        Node<T> replacement = null;
-
-        if (removed == null)
+        if (removed == null) {
             return;
-
-        if (removed.getParent() == null) {
-            // removed == root
-            replacement = findMaxNode(removed.getLeft());
-            if (replacement == null) {
-                //there's no left branch
-                replacement = removed.getRight();
-                removed.unlinkRight();
-            } else {
-                //replace remove node by max from left branch
-                replaceByMaxFromLeftBranch(removed, replacement);
-            }
-            root = replacement;
-        } else {
-            // removed != root
-            replacement = findMaxNode(removed.getLeft());
-            if (replacement == null) {
-                //there's no left branch
-                replacement = removed.getRight();
-                removed.unlinkRight();
-                if (replacement != null)
-                    //replace removed node by right branch
-                    replacement.linkParent(removed.getParent());
-                else
-                    //removed == leaf
-                    removed.unlinkParent();
-            } else {
-                //replace removed node by max from left branch + link to parent
-                replaceByMaxFromLeftBranch(removed, replacement);
-                replacement.linkParent(removed.getParent());
-            }
         }
+
+        removeNode(removed);
+
         size--;
     }
 
-    private void replaceByMaxFromLeftBranch(Node<T> removed, Node<T> replacement) {
-        replacement.unlinkParent();
-        replacement.linkLeft(removed.getLeft());
-        replacement.linkRight(removed.getRight());
+    protected Node<T> removeNode(Node<T> removed) {
+        Node<T> replacement = null;
+        Node<T> parent = removed.unlinkParent();
+
+        replacement = findMaxNode(removed.getLeft());
+        if (replacement != null) {
+            //there's left branch with max
+            Node<T> maxParent = replacement.unlinkParent();
+            Node<T> maxLeft = replacement.unlinkLeft();
+            if (maxLeft != null)
+                maxLeft.linkParent(maxParent);
+        }
+
+        // replace removed by replacement
+        if (replacement != null) {
+            replacement.linkLeft(removed.unlinkLeft());
+            replacement.linkRight(removed.unlinkRight());
+        } else {
+            replacement = removed.unlinkRight();
+        }
+
+        if (parent != null) {
+            if (replacement != null)
+                replacement.linkParent(parent);
+        } else {
+            root = replacement;
+        }
+
+        return replacement;
     }
 
     private Node<T> findMaxNode(Node<T> root) {

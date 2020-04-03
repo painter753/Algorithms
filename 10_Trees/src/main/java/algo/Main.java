@@ -3,64 +3,68 @@ package algo;
 import algo.trees.AVLTree;
 import algo.trees.BSTree;
 import algo.trees.Tree;
-
-import java.util.Random;
+import algo.trees.util.ArrayGenerator;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
         int[] array = new int[10];
+        Tree<Integer> btree1 = new BSTree<>();
+
 
         testTrees();
     }
 
     public static void testTrees() {
-        int[] elements = new int[]{100000, 5000};
+
+        Integer[] elements = ArrayGenerator.generateAscendedSequence(200000, 100000);
 
         Tree<Integer> btree1 = new BSTree<>();
-        //testTree(btree1, false);
-
+        //testTree(btree1, elements, " btree ascending");
         Tree<Integer> avltree1 = new AVLTree<>();
-        //testTree(avltree1, false);
+        testTree(avltree1, elements, " avltree ascending");
+
+        elements = ArrayGenerator.generateRandomSequence(200000, 100000);
 
         Tree<Integer> btree2 = new BSTree<>();
-        //testTree(btree2, true);
-
+        //testTree(btree2, elements, "btree random");
         Tree<Integer> avltree2 = new AVLTree<>();
-        testTree(avltree2, true);
+        testTree(avltree2, elements, "avltree random");
+
     }
 
-    public static void testTree(Tree<Integer> tree, boolean useRandom) {
-        final int elements = 150000;
-        final int elementsSearch = elements / 10;
+    public  static <T extends Comparable<T>> void testTree(Tree<T> tree, T[] elements, String comment) {
+        System.out.printf("Testing with %s array. size: %d \n", comment, elements.length);
+        final int elementsCounter = elements.length;
+        final int elementsSearchCounter = elementsCounter / 10;
 
         long start = System.currentTimeMillis();
-        if (!useRandom) {
-            for (int i = 0; i < elements; i++)
-                tree.insert(i);
-        } else {
-            Random random = new Random();
-            for (int i = 0; i < elements; i++) {
-                tree.insert(random.nextInt(elements));
-            }
+        for (T element : elements) {
+            tree.insert(element);
         }
         long end = System.currentTimeMillis() - start;
-        System.out.println("Insert ended: " + end);
+        System.out.printf("Insertion: %d \n", end);
+
+        List<T> elementsShuffled = Arrays.asList(elements);
+        Collections.shuffle(elementsShuffled);
 
         start = System.currentTimeMillis();
-        Random random = new Random();
-        for (int i = 0; i < elementsSearch; i++) {
-            tree.search(random.nextInt(elementsSearch));
+        for (int i = 0; i < elementsSearchCounter; i++) {
+            tree.search(elementsShuffled.get(i));
         }
         end = System.currentTimeMillis() - start;
-        System.out.println("Search ended: " + end);
+        System.out.printf("Searching: %d \n", end);
 
-        //start = System.currentTimeMillis();
-        //for (int i = 0; i < elementsSearch; i++) {
-        //    tree.remove(random.nextInt(elementsSearch));
-        //}
-        //end = System.currentTimeMillis() - start;
-        //System.out.println("Remove ended: " + end);
+        Collections.shuffle(elementsShuffled);
+
+        start = System.currentTimeMillis();
+        for (int i = 0; i < elementsSearchCounter; i++) {
+            tree.remove(elementsShuffled.get(i));
+        }
+        end = System.currentTimeMillis() - start;
+        System.out.printf("Removing: %d \n", end);
     }
+
 
 }

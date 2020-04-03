@@ -36,7 +36,7 @@ public interface Node<T extends Comparable<T>> {
     }
     default void linkParent(Node<T> node) {
         if (node != null) {
-            if (this.getItem().compareTo(node.getItem()) > 0) {
+            if (this.getItem().compareTo(node.getItem()) >= 0) {
                 node.linkRight(this);
             } else {
                 node.linkLeft(this);
@@ -65,7 +65,7 @@ public interface Node<T extends Comparable<T>> {
     default Node<T> unlinkParent() {
         Node<T> node = getParent();
         if (node != null) {
-            if (this.getItem().compareTo(node.getItem()) > 0) {
+            if (this.getItem().compareTo(node.getItem()) >= 0) {
                 node.unlinkRight();
             } else {
                 node.unlinkLeft();

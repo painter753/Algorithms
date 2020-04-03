@@ -6,6 +6,7 @@ public class AVLNode<T extends Comparable<T>> extends BSNode<T> implements HasHe
 
     public AVLNode(T item) {
         super(item);
+        this.height = 1;
     }
 
     @Override
@@ -30,13 +31,13 @@ public class AVLNode<T extends Comparable<T>> extends BSNode<T> implements HasHe
     public void updateHeight() {
         int leftHeight = getLeft() == null ? 0 : getLeft().getHeight();
         int rightHeight = getRight() == null ? 0 : getRight().getHeight();
-        this.height = Math.max(leftHeight, rightHeight) + 1;
+        this.height =  Math.max(leftHeight, rightHeight) + 1;
     }
 
     public int getBalance() {
         int leftHeight = getLeft() == null ? 0 : getLeft().getHeight();
         int rightHeight = getRight() == null ? 0 : getRight().getHeight();
-        int balance = leftHeight - rightHeight;
+        int balance = rightHeight - leftHeight;
         return balance;
     }
 
