@@ -6,7 +6,7 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
     protected int size;
 
     public AbstractTree(){
-        this.size = 0;
+        size = 0;
     }
 
     @Override
@@ -62,7 +62,8 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
             }
             if (comparator > 0)
                 cursor = prev.getRight();
-            else if (comparator < 0) {
+            else {
+                // comparator < 0
                 cursor = prev.getLeft();
             }
         }
@@ -78,7 +79,6 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
         }
 
         removeNode(removed);
-
         size--;
     }
 
@@ -127,7 +127,6 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
     @Override
     public void sort() {
         if (size == 0) return;
-
         sort(root);
     }
 
@@ -137,6 +136,11 @@ public abstract class AbstractTree<T extends Comparable<T>> implements Tree<T> {
         System.out.println(node.getItem());
         if (node.getRight() != null)
             sort(node.getRight());
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     public abstract Node<T> newNode(T item);

@@ -7,5 +7,6 @@ public interface Tree<T> {
     void remove(T item);
 
     void sort();
+    int size();
 
 }
