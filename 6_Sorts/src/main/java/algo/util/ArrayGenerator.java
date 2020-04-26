@@ -1,7 +1,7 @@
-package algo.sorts.util;
+package algo.util;
 
 import java.util.*;
-import static algo.sorts.util.Utils.*;
+import static algo.util.Utils.*;
 
 public class ArrayGenerator {
 
@@ -13,10 +13,36 @@ public class ArrayGenerator {
         printArray(generatePartiallyRandomSequenceNumbers(20, 40, 2));
     }
     public static Integer[] generateRandomSequence(int count, int bound) {
+        Integer[] elements = generateAscendedSequenceWithoutDuplicates(count);
+        List<Integer> elementsArray = Arrays.asList(elements);
+        Collections.shuffle(elementsArray);
+        Integer[] intArray = new Integer[count];
+        return elementsArray.toArray(intArray);
+    }
+
+    public static Integer[] generateAbsoluteRandomSequence(int count, int bound) {
         Integer[] intArray = new Integer[count];
         ArrayList<Integer> array = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            array.add((int) (Math.random() * bound));
+            array.add((int)(Math.random() * bound));
+        }
+        return array.toArray(intArray);
+    }
+
+    public static Integer[] generateAscendedSequenceWithoutDuplicates(int count) {
+        Integer[] intArray = new Integer[count];
+        ArrayList<Integer> array = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            array.add(i);
+        }
+        return array.toArray(intArray);
+    }
+
+    public static Integer[] generateDescendedSequenceWithoutDuplicates(int count) {
+        Integer[] intArray = new Integer[count];
+        ArrayList<Integer> array = new ArrayList<>();
+        for (int i = count; i >= 0; i--) {
+            array.add(i);
         }
         return array.toArray(intArray);
     }
@@ -57,5 +83,26 @@ public class ArrayGenerator {
         return newArray;
     }
 
+    public static <T> void printArray(T[] array) {
+        StringBuilder builder = new StringBuilder();
+        if (array.length == 0) {
+            System.out.println("no elems");
+            return;
+        }
+        for (int i = 0; i < array.length; i++) {
+            builder.append(array[i].toString()).append(" ");
+        }
+        System.out.println(builder.toString());
+    }
 
+
+    public static int[] cloneToIntArray(Integer[] array) {
+        int[] newArray = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
+
+        //System.arraycopy(array, 0, newArray, 0, array.length);
+        return newArray;
+    }
 }

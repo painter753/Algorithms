@@ -2,7 +2,7 @@ package algo.sorts.sort6;
 
 import algo.sorts.Sorter;
 
-import static algo.sorts.util.Utils.*;
+import static algo.util.Utils.*;
 
 public class BubbleSort<T extends Comparable<T>> implements Sorter<T> {
 

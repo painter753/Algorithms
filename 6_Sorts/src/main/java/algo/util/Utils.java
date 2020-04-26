@@ -1,4 +1,4 @@
-package algo.sorts.util;
+package algo.util;
 
 public class Utils {
     public static <T> void printArray(T[] array) {

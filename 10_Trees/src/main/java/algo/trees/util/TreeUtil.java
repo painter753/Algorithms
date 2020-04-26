@@ -1,6 +1,6 @@
 package algo.trees.util;
 
-import algo.trees.AVLNode;
+import algo.trees.node.AVLNode;
 
 public class TreeUtil {
 

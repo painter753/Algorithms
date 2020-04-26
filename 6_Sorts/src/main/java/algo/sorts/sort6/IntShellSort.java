@@ -1,12 +1,12 @@
 package algo.sorts.sort6;
 
 import algo.containers.IArray;
-import algo.sorts.Sorter;
 import algo.util.ArrayGenerator;
 import algo.util.GapGenerator;
-import algo.util.Utils;
-
-public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
+/*
+    For comparing performance for algorithms using T[] and int[]
+ */
+public class IntShellSort {
 
     private GapGenerator.GapType type;
     private Integer[] gaps;
@@ -38,11 +38,11 @@ public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
 
     }
 
-    public ShellSort() {
+    public IntShellSort() {
         type = GapGenerator.GapType.DEFAULT;
     }
 
-    public ShellSort(GapGenerator.GapType type) {
+    public IntShellSort(GapGenerator.GapType type) {
         this.type = type;
     }
 
@@ -58,15 +58,14 @@ public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
         System.out.println(builder.toString());
     }
 
-    @Override
-    public void sort(T[] array) {
+    public void sort(int[] array) {
         IArray<Integer> gaps = GapGenerator.getGapSequence(type, array.length);
         for (int i = 0; i < gaps.size(); i++) {
             int gap = gaps.get(i);
             for (int j = 0; j + gap < array.length; j++) {
                 int k = j + gap;
-                T elem = array[k];
-                while (k - gap >= 0 && array[k - gap].compareTo(elem) > 0) {
+                int elem = array[k];
+                while (k - gap >= 0 && array[k - gap] > elem) {
                     array[k] = array[k - gap];
                     k -= gap;
                 }
@@ -75,14 +74,14 @@ public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
         }
     }
 
-    public void sortUsingGapsOld(T[] array) {
+    public void sortUsingGapsOld(int[] array) {
         IArray<Integer> gaps = GapGenerator.getGapSequence(type, array.length);
         for (int i = 0; i < gaps.size(); i++) {
             int gap = gaps.get(i);
             for (int j = gap; j < array.length; j += gap) {
-                T elem = array[j];
+                int elem = array[j];
                 int k = j - gap;
-                while (k >= 0 && array[k].compareTo(elem) > 0) {
+                while (k >= 0 && array[k] > elem) {
                     array[k + gap] = array[k];
                     k -= gap;
                 }
@@ -92,13 +91,13 @@ public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
     }
 
 
-    public void sortOld(T[] array) {
+    public void sortOld(int[] array) {
         for (int i = array.length / 2; i > 0; i /= 2) {
             int gap = i;
             for (int j = gap; j < array.length; j += gap) {
-                T elem = array[j];
+                int elem = array[j];
                 int k = j - gap;
-                while (k >= 0 && array[k].compareTo(elem) > 0) {
+                while (k >= 0 && array[k] > elem) {
                     array[k + gap] = array[k];
                     k -= gap;
                 }
@@ -106,5 +105,4 @@ public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
             }
         }
     }
-
 }

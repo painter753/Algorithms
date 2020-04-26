@@ -1,8 +1,8 @@
 package algo.sorts.sort8;
 
 import algo.sorts.Sorter;
-import algo.sorts.util.ArrayGenerator;
-import algo.sorts.util.Utils;
+import algo.util.ArrayGenerator;
+import algo.util.Utils;
 
 public class MergeSort<T extends Comparable<T>> implements Sorter<T> {
 

@@ -1,39 +1,36 @@
 package algo.sorts.sort6;
 
 import algo.sorts.Sorter;
+import algo.util.ArrayGenerator;
 
-import static algo.sorts.util.Utils.*;
+import static algo.util.Utils.*;
 
 public class InsertionSort<T extends Comparable<T>> implements Sorter<T> {
     public static void main(String[] args) {
-        Integer[] array = new Integer[10];
+        Integer[] array = new Integer[100000];
         for (int i = 0; i < array.length; i++) {
-            array[i] = (int) (Math.random() * 100);
+            array[i] = (int) (Math.random() * 100000);
         }
 
-        printArray(array);
-        new InsertionSort<Integer>().sortAgain(array);
-        printArray(array);
+        long start = 0;
+        long end = 0;
 
-//        Integer[] clone = new Integer[array.length];
-//        System.arraycopy(array, 0, clone, 0, array.length);
-//
-//
-//        System.out.println("Simple Sort:");
-//        printArray(array);
-//        long start = System.currentTimeMillis();
-//        new InsertionSort<Integer>().sortSimple(array);
-//        System.out.println((System.currentTimeMillis() - start) + " ms");
-//        printArray(array);
-//
-//        System.out.println("Advanced Sort:");
-//        printArray(clone);
-//        long start2 = System.currentTimeMillis();
-//        new InsertionSort<Integer>().sortAdvanced(clone);
-//        System.out.println((System.currentTimeMillis() - start2) + " ms");
-//        printArray(clone);
+        //printArray(array);
+
+        Integer[] arr = ArrayGenerator.cloneArray(array);
+        start = System.currentTimeMillis();
+        new InsertionSort<Integer>().sortAdvanced(arr);
+        System.out.println(System.currentTimeMillis() - start);
+        //printArray(arr);
+
+        arr = ArrayGenerator.cloneArray(array);
+        start = System.currentTimeMillis();
+        new InsertionSort<Integer>().sort(arr);
+        System.out.println(System.currentTimeMillis() - start);
+        //printArray(arr);
+
+
     }
-
 
     @Override
     public void sort(T[] array) {
@@ -51,17 +48,6 @@ public class InsertionSort<T extends Comparable<T>> implements Sorter<T> {
     }
 
     public void sortAdvanced(T[] array) {
-        for (int i = 0; i < array.length; i++) {
-            T value = array[i];
-            int j = i - 1;
-            for (j = i - 1; j >= 0 && array[j].compareTo(value) > 0; j--) {
-                    array[j + 1] = array[j];
-            }
-            array[j + 1] = value;
-        }
-    }
-
-    public void sortAgain(T[] array) {
         for (int i = 1; i < array.length; i++) {
             T elem = array[i];
             int j = i - 1;
@@ -70,7 +56,6 @@ public class InsertionSort<T extends Comparable<T>> implements Sorter<T> {
                 j--;
             }
             array[j + 1] = elem;
-
         }
     }
 }

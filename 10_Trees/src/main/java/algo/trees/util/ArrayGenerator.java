@@ -12,14 +12,14 @@ public class ArrayGenerator {
         printArray(generatePartiallyRandomSequenceNumbers(20, 40, 2));
     }
     public static Integer[] generateRandomSequence(int count, int bound) {
-        Integer[] elements = generateAscendedSequence(count, bound);
+        Integer[] elements = generateAscendedSequenceWithoutDuplicates(count);
         List<Integer> elementsArray = Arrays.asList(elements);
         Collections.shuffle(elementsArray);
         Integer[] intArray = new Integer[count];
         return elementsArray.toArray(intArray);
     }
 
-    public static Integer[] generateRandomSequenceOld(int count, int bound) {
+    public static Integer[] generateAbsoluteRandomSequence(int count, int bound) {
         Integer[] intArray = new Integer[count];
         ArrayList<Integer> array = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -28,10 +28,19 @@ public class ArrayGenerator {
         return array.toArray(intArray);
     }
 
-    public static Integer[] generateAscendedSequence(int count, int bound) {
+    public static Integer[] generateAscendedSequenceWithoutDuplicates(int count) {
         Integer[] intArray = new Integer[count];
         ArrayList<Integer> array = new ArrayList<>();
         for (int i = 0; i < count; i++) {
+            array.add(i);
+        }
+        return array.toArray(intArray);
+    }
+
+    public static Integer[] generateDescendedSequenceWithoutDuplicates(int count) {
+        Integer[] intArray = new Integer[count];
+        ArrayList<Integer> array = new ArrayList<>();
+        for (int i = count; i >= 0; i--) {
             array.add(i);
         }
         return array.toArray(intArray);

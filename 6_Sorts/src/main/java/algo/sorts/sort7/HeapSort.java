@@ -1,9 +1,9 @@
 package algo.sorts.sort7;
 
 import algo.sorts.Sorter;
-import algo.sorts.util.ArrayGenerator;
+import algo.util.ArrayGenerator;
 
-import static algo.sorts.util.Utils.*;
+import static algo.util.Utils.*;
 
 public class HeapSort<T extends Comparable<T>> implements Sorter<T> {
 
