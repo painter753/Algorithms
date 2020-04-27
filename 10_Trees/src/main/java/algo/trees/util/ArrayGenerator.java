@@ -76,8 +76,15 @@ public class ArrayGenerator {
         return array.toArray(intArray);
     }
 
-    public static Integer[] cloneArray(Integer[] array) {
-        Integer[] newArray = new Integer[array.length];
+    public static <T extends Comparable<T>> T[] cloneArray(Object[] array, Class<T> clazz) {
+        T[] newArray = (T[]) new Object[array.length];
+        System.arraycopy(array, 0, newArray, 0, array.length);
+        return newArray;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Comparable<T>> T[] cloneArray(T[] array) {
+        T[] newArray = (T[]) new Object[array.length];
         System.arraycopy(array, 0, newArray, 0, array.length);
         return newArray;
     }
@@ -95,5 +102,13 @@ public class ArrayGenerator {
     }
 
 
+    public static int[] cloneToIntArray(Integer[] array) {
+        int[] newArray = new int[array.length];
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i];
+        }
 
+        //System.arraycopy(array, 0, newArray, 0, array.length);
+        return newArray;
+    }
 }

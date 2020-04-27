@@ -135,7 +135,8 @@ public class Main {
     public static void testSorters (Map<String, Consumer<Integer[]>> consumers, int itemCount, NumSequence type) {
 
         System.out.printf("Sort %d elements. Order: %s\n", itemCount, type.toString());
-        System.out.printf("%s | %s\n", "SorterName", "Evaluation time");
+        System.out.printf("| %s | %s |\n", "SorterName", "Evaluation time");
+        System.out.printf("| --- | --- |");
 
         Integer[] array = null;
 
@@ -157,7 +158,8 @@ public class Main {
     public static void testIntSorters(Map<String, Consumer<int[]>> consumers, int itemCount, NumSequence type) {
 
         System.out.printf("Sort %d elements. Order: %s\n", itemCount, type.toString());
-        System.out.printf("%s | %s\n", "SorterName", "Evaluation time");
+        System.out.printf("| %s | %s |\n", "SorterName", "Evaluation time");
+        System.out.printf("| --- | --- |");
 
         Integer[] array = null;
 
@@ -181,7 +183,7 @@ public class Main {
         long start = System.currentTimeMillis();
         consumer.accept(array);
         long end = System.currentTimeMillis() - start;
-        System.out.printf("%s | %d | %s\n", sorterName, end, "");
+        System.out.printf("| %s | %d | %s |\n", sorterName, end, "");
 
 
     }
@@ -191,7 +193,7 @@ public class Main {
         long start = System.currentTimeMillis();
         consumer.accept(array);
         long end = System.currentTimeMillis() - start;
-        System.out.printf("%s | %d | %s\n", sorterName, end, "");
+        System.out.printf("| %s | %d | %s |\n", sorterName, end, "");
 
 
     }
