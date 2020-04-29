@@ -1,6 +1,5 @@
 package algo;
 
-import algo.trees.RandomBSTree;
 import algo.trees.tree.*;
 import algo.trees.util.ArrayGenerator;
 import java.util.*;
@@ -34,7 +33,7 @@ public class Main {
         Map<String, Tree<Integer>> trees = new LinkedHashMap<>();
 
         Tree<Integer> bst = new BSTree<>();
-        trees.put("BS Tree", bst);
+        //trees.put("BS Tree", bst);
 
         Tree<Integer> avlt = new AVLTree<>();
         trees.put("AVL Tree", avlt);
@@ -42,20 +41,33 @@ public class Main {
         Tree<Integer> ct = new IntCTree();
         trees.put("C Tree", ct);
 
-        testIntTrees(trees, 100000, NumSequence.RANDOM);
+        Tree<Integer> splt = new SplayTree<>();
+        trees.put("Splay Tree", splt);
+
+        Tree<Integer> rndt = new RNDTree<>();
+        trees.put("RND Tree", rndt);
+
+        testIntTrees(trees, 1000000, NumSequence.RANDOM);
         System.out.println();
 
         trees = new LinkedHashMap<>();
 
         bst = new BSTree<>();
-        trees.put("BS Tree", bst);
+        //trees.put("BS Tree", bst);
 
         avlt = new AVLTree<>();
         trees.put("AVL Tree", avlt);
 
         ct = new IntCTree();
         trees.put("C Tree", ct);
-        testIntTrees(trees, 100000, NumSequence.ASCENDED);
+
+        rndt = new RNDTree<>();
+        trees.put("RND Tree", rndt);
+
+        splt = new SplayTree<>();
+        trees.put("Splay Tree", splt);
+
+        testIntTrees(trees, 1000000, NumSequence.ASCENDED);
     }
 
 
